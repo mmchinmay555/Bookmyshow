@@ -1,0 +1,118 @@
+{% extends "base.html" %} 
+
+{% block title %} 
+Sign Up 
+{% endblock %}
+
+{% block content %}
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" style="font-weight: 1000; font-family: 'Poppins', sans-serif" href="#">Bookmyshow</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse d-md-flex justify-content-md-end" id="navbarNavDropdown">
+      <ul class="navbar-nav navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/">Home</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          {% if user.is_theatre_admin %}
+            <a class="nav-link" href="/my_theaters">Theater</a>
+        </li>
+        {% elif user.is_super_admin %}
+        <a class="nav-link" href="movies">Movies</a>
+        {% else %}
+        <a class="nav-link" href="my_tickets">My Tickets</a>
+        {% endif %}
+        {% endif %}
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {% if user.is_theatre_admin %}
+              {{ user.name }}, Theatre Admin
+            {% elif user.is_super_admin %}
+              {{ user.name }}, Super Admin
+            {% else %}
+              {{ user.name }}
+            {% endif %}
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="nav-link" href="/logout">Logout</a></li>
+          </ul>
+        </li>
+        {% else %}
+        <li class="nav-item justify-content-end">
+          <a class="nav-link active" href="/login">Login</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+ <!-- Flash Messages -->
+ {% with messages = get_flashed_messages(with_categories=true) %}
+ {% if messages %}
+ {% for category, message in messages %}
+ {% if category == 'error' %}
+ <div class="alert alert-danger alert-dismissible fade show" role="alert">
+     {{ message }}
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ </div>
+ {% elif category == 'success' %}
+ <div class="alert alert-success alert-dismissible fade show" role="alert">
+     {{ message }}
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ </div>
+ {% elif category == 'warning' %}
+ <div class="alert alert-warning alert-dismissible fade show" role="alert">
+     {{ message }}
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ </div>
+ {% elif category == 'note' %}
+ <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+     {{ message }}
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ </div>
+ {% endif %}
+ {% endfor %}
+ {% endif %}
+ {% endwith %}
+
+<h3 style="display: flex; justify-content: center;align-items: center;padding-top:5%; font-weight:700">Register</h3>
+<div class="form" style="display: flex; justify-content: center;align-items: center;padding-top:20px">
+    
+    <form method = "POST">
+        <div class="mb-3">
+            <label for="Name" class="form-label">Name</label>
+            <input type="name" class="form-control" id="email" name="name" minlength="3">
+          </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="user_type" value="theatre_admin" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Theatre Admin
+          </label>
+        </div>
+        <div class="mb-3">
+          <label for="password1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password1" name="password1" minlength="6" placeholder="Minimum 6 Characters">
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control" id="password2",  name="password2" minlength="6" placeholder="Confirm password">
+          </div>
+          <p>Already registered? <a href="/login">Login</a> </p>
+        <button type="submit" class="btn btn-primary">Register</button>
+      </form>
+</div>
+
+
+
+{% endblock %}

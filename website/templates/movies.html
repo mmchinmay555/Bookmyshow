@@ -1,0 +1,123 @@
+{% extends "base.html" %} 
+
+{% block title %} 
+Movies 
+{% endblock %}
+
+{% block content %}
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" style="font-weight: 1000; font-family: 'Poppins', sans-serif" href="#">Bookmyshow</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse d-md-flex justify-content-md-end" id="navbarNavDropdown">
+      <ul class="navbar-nav navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/">Home</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          {% if user.is_theatre_admin %}
+            <a class="nav-link" href="/my_theaters">Theater</a>
+        </li>
+        {% elif user.is_super_admin %}
+        <a class="nav-link active" href="/movies">Movies</a>
+        {% else %}
+        <a class="nav-link" href="/my_tickets">My Tickets</a>
+        {% endif %}
+        {% endif %}
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {% if user.is_theatre_admin %}
+              {{ user.name }}, Theatre Admin
+            {% elif user.is_super_admin %}
+              {{ user.name }}, Super Admin
+            {% else %}
+              {{ user.name }}
+            {% endif %}
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="nav-link" href="/logout">Logout</a></li>
+          </ul>
+        </li>
+        {% else %}
+        <li class="nav-item justify-content-end">
+          <a class="nav-link" href="/login">Login</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+ <!-- Flash Messages -->
+ {% with messages = get_flashed_messages(with_categories=true) %}
+ {% if messages %}
+ {% for category, message in messages %}
+ {% if category == 'error' %}
+ <div class="alert alert-danger alert-dismissible fade show" role="alert">
+     {{ message }}
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ </div>
+ {% elif category == 'success' %}
+ <div class="alert alert-success alert-dismissible fade show" role="alert">
+     {{ message }}
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ </div>
+ {% elif category == 'warning' %}
+ <div class="alert alert-warning alert-dismissible fade show" role="alert">
+     {{ message }}
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ </div>
+ {% elif category == 'note' %}
+ <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+     {{ message }}
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ </div>
+ {% endif %}
+ {% endfor %}
+ {% endif %}
+ {% endwith %}
+
+<div class="container-fluid pt-4 ps-5">
+    <div class="row">
+        <div class="col-10">
+            <h5 class="fw-bold">Movies</h5>
+        </div>
+        <div class="col-2"><a href="/add_movies" class="btn btn-outline-dark btn-sm">Add Movies</a></div>
+    </div>
+
+
+<div class="container-fluid align-self-center">
+    <div class="container pt-4 pb-4">
+        <div class="row row-cols-auto">
+        {% for movie in user.movies %}
+          <div class="col" style="padding-top: 25px;">
+            <div class="card" style="width: 15rem; vertical-align:middle;">
+                <div class="text-center">
+                    <img src="/static/movie_posters/{{ movie.poster }}" class="card-img-top">
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{ movie.title }}</h5>
+                  <p class="card-text">{{ movie.starring }}</p>
+                </div>
+                <div class="card-body">
+                  <a href="/update_movies/{{ movie.id }}" class="card-link">Update</a>
+                </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+{% endblock %}
