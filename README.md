@@ -10,5 +10,5 @@ git clone <repo-url>
 ```bash
 pip install flask
 pip install Flask-SQLAlchemy
-flask-login
+pip flask-login
 ```
