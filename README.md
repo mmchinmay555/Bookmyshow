@@ -1,6 +1,8 @@
 # Bookmyshow
 Movie Booking System similar to bookmyshow
 
+<img src="https://github.com/mmchinmay555/Bookmyshow/blob/master/Screenshot%20from%202021-04-14%2016-37-31.png"/>
+
 ## Working of the App
 We have 3 categories of users
 
