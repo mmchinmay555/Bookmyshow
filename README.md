@@ -15,7 +15,12 @@ Theater Admin
 Normal User
 <li> Book shows </li>
 
-So basically, Super admin adds movies to the database and theater admin add theaters to the database and update shows for his/her theater and normal user books the show
+------------------------------------------------------------------------------------
+
+So basically, 
+<li> Super admin adds movies to the database </li>
+<li> theater admin add theaters to the database and update shows for his/her theater </li>
+<li> normal user books the show </li>
 
 ## Setup and Installation
 
