@@ -6,4 +6,9 @@ Movie Booking System similar to bookmyshow
 ```bash
 git clone <repo-url>
 ```
-
+## Requirements
+```bash
+pip install flask
+pip install Flask-SQLAlchemy
+flask-login
+```
