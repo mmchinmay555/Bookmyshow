@@ -18,4 +18,6 @@ pip install <module name>
 ```
 
 ## Run the app
+```bash
+python main.py
 ```
