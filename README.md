@@ -33,7 +33,7 @@ git clone <repo-url>
 ```bash
 pip install flask
 pip install Flask-SQLAlchemy
-pip flask-login
+pip install flask-login
 ```
 if you get any No Module found error, 
 ```bash
